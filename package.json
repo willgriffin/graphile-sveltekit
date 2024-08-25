@@ -13,7 +13,13 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"cli": "tsx ./cli/index.ts"
+		"cli": "tsx ./cli/index.ts",
+		"db:gm": "graphile-migrate",
+		"db:migrate": "npm run db:gm migrate",
+		"db:watch": "npm run db:gm watch",
+		"db:commit": "npm run db:gm commit",
+		"db:uncommit": "npm run db:gm uncommit",
+		"db:reset": "npm run db:gm reset"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -25,6 +31,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"graphile-migrate": "^1.4.1",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"svelte": "^5.0.0-next.1",
