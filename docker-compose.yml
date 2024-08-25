@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    env_file:
+      - .env
+
+    working_dir: /
+
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+      - ./data:/data
+    ports:
+      - "6933:5432"
+    restart: unless-stopped
+    networks:
+      - default
+    command:
+      postgres -c log_destination=stderr -c log_min_messages=NOTICE
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"] # Replace with your actual DB user
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  default:
+    # No metadata required right now.
+
+volumes:
+  # Postgres' data
+  db-volume:
