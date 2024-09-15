@@ -1,4 +1,14 @@
-# create-svelte
+# graphile-sveltekit
+
+sveltekit with the graphile stack and a cli. Inspired by [`graphile-starter`](https://github.com/graphile/starter)
+
+
+
+
+
+
+
+## sveltekit readme...
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
