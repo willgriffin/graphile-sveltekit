@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "noImplicitAny": false
   },
   "include": [
     ".svelte-kit/ambient.d.ts",
@@ -23,7 +24,8 @@
     "tests/**/*.js",
     "tests/**/*.ts",
     "tests/**/*.svelte",
-    "cli/**/*.ts"
+    "cli/**/*.ts",
+    "tasks/**/*.ts"
   ],
   "exclude": [
     "node_modules/**",

@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "docker compose up -d && ./wait-for-it.sh postgres:5432 -- concurrently -n \"svelte,database,worker\" -c \"red,blue,yellow,green\" \"vite dev\" \"npm run db:watch\" \"npm run worker:dev\" && docker compose down",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
@@ -19,7 +19,11 @@
 		"db:watch": "npm run db:gm watch",
 		"db:commit": "npm run db:gm commit",
 		"db:uncommit": "npm run db:gm uncommit",
-		"db:reset": "npm run db:gm reset"
+		"db:reset": "npm run db:gm reset",
+		"worker": "NODE_OPTIONS=\"--import tsx --trace-deprecation\" graphile-worker --crontab ./crontab",
+		"worker:dev": "NODE_OPTIONS=\"${NODE_OPTIONS:-} --import tsx --inspect=9757\" graphile-worker --crontab ./crontab",
+		"worker:start": "npm run grahpile-worker",
+		"worker:install-db-schema": "mkdirp dist && yarn gw --schema-only"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -27,11 +31,14 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
 		"@types/eslint": "^9.6.0",
+		"concurrently": "^9.0.0",
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"graphile-config": "^0.0.1-beta.9",
 		"graphile-migrate": "^1.4.1",
+		"graphile-worker": "v0.17.0-canary.6c2c85c",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"svelte": "^5.0.0-next.1",
@@ -44,6 +51,10 @@
 	},
 	"type": "module",
 	"bin": {
-		"graphile-sveltekit": "./cli/index.ts"
+		"graphile-sveltekit": "./src/cli/index.ts"
+	},
+	"dependencies": {
+		"graphql": "^15.9.0",
+		"postgraphile": "^4.13.0"
 	}
 }
